@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+	  <!-- Point this at your Eco source server Mods/UserCode -->
+	  <EcoModsDir>C:\Program Files (x86)\Steam\steamapps\common\Eco\Eco_Data\Server\Mods\UserCode</EcoModsDir>
+  </PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
+		<Optimize>false</Optimize>
+		<DebugType>portable</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Eco.ReferenceAssemblies" Version="0.13.0.2-beta-release-1006" />
+  </ItemGroup>
+
+    <Target Name="CopyModToEco" AfterTargets="Build">
+	    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(EcoModsDir)" SkipUnchangedFiles="true" />
+	    <Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(EcoModsDir)" SkipUnchangedFiles="true" Condition="Exists('$(TargetDir)$(TargetName).pdb')" />
+    </Target>
+	
+</Project>
