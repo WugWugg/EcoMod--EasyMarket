@@ -286,15 +286,16 @@ namespace EasyMarket
                 case EasyMarketStatus.Running:
                     break;
             }
-            if (status is EasyMarketStatus.NeedsAccount)
+            // Do not reuse status, each init function will update the status as it goes. Recheck after calling!
+            if (EasyMarketPlugin.Obj.GetStatusObject() is EasyMarketStatus.NeedsAccount)
                 initAccount(chat);
             else
                 chat.MsgLocStr($"Player account already existed.");
-            if (status is EasyMarketStatus.NeedsCurrency)
+            if (EasyMarketPlugin.Obj.GetStatusObject() is EasyMarketStatus.NeedsCurrency)
                 initCurrency(chat);
             else
                 chat.MsgLocStr($"Currency already existed.");
-            if (status is EasyMarketStatus.Running)
+            if (EasyMarketPlugin.Obj.GetStatusObject() is EasyMarketStatus.Running)
                 fund(chat, amount);
         }
 
